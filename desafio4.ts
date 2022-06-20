@@ -54,10 +54,12 @@ if (searchButton !== null) {
     let listaDeFilmes = await procurarFilme(query);
     let ul = document.createElement('ul');
     ul.id = "lista"
-    for (const item of listaDeFilmes.results) {
-        let li = document.createElement('li');
-        li.appendChild(document.createTextNode(item.original_title))
-        ul.appendChild(li)
+    if (typeof listaDeFilmes === 'object' && listaDeFilmes != null) {
+      for (const item of listaDeFilmes.results) {
+          let li = document.createElement('li');
+          li.appendChild(document.createTextNode(item.original_title))
+          ul.appendChild(li)
+      }
     }
     console.log(listaDeFilmes);
     if (searchContainer !== null) {
@@ -152,7 +154,9 @@ async function criarRequestToken () {//CRIA TOKEN, ATIVADA NA (PRIMEIRA FUNÇÃO
     method: "GET",
     body: null
   })
-  requestToken = result.request_token
+  if (typeof result === 'object' && result != null) {
+    requestToken = result.request_token
+  }
 }
 
 async function logar() {//PASSA AS INFORMAÇÕES PARA O SERVIDOR PARA LOGAR, ATIVADA NA (1ª GUNÇÃO)
@@ -173,7 +177,9 @@ async function criarSessao() {
     method: "GET",
     body: null
   })
-  sessionId = result.session_id;
+  if (typeof result === 'object' && result != null) {
+    sessionId = result.session_id;
+  }
 }
 
 async function criarLista(nomeDaLista: string, descricao: string) {
